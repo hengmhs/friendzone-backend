@@ -1,15 +1,13 @@
 "use strict";
-
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
-  class Nationality extends Model {
+  class Status extends Model {
     static associate(models) {
-      this.hasMany(models.participant, {
-        foreignKey: "nationality_id",
-      });
+      this.hasMany(models.event_participant_group);
     }
   }
-  Nationality.init(
+  Status.init(
     {
       id: {
         allowNull: false,
@@ -25,10 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "nationality",
+      modelName: "status",
       underscored: true,
       timestamps: false,
     }
   );
-  return Nationality;
+  return Status;
 };
