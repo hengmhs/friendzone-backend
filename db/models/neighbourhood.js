@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Neighbourhood extends Model {
     static associate(models) {
       this.hasMany(models.participant, {
-        foreignKey: "postal_code",
+        foreignKey: "postalCode",
       });
     }
   }
