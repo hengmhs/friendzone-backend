@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.nationality);
       this.belongsTo(models.marital_status);
       this.belongsTo(models.race);
+      this.belongsTo(models.neighbourhood);
     }
   }
   Participant.init(
@@ -22,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       postal_code: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       year: {

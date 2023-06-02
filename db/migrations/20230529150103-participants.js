@@ -41,6 +41,17 @@ module.exports = {
         unique: true,
       },
     });
+    await queryInterface.createTable("neighbourhoods", {
+      id: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.STRING,
+      },
+      location: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+    });
     await queryInterface.createTable("participants", {
       id: {
         allowNull: false,

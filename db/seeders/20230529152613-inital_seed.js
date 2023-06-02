@@ -48,5 +48,6 @@ module.exports = {
     await queryInterface.bulkDelete("nationalities", null, {});
     await queryInterface.bulkDelete("races", null, {});
     await queryInterface.bulkDelete("marital_statuses", null, {});
+    await queryInterface.bulkDelete("neighbourhoods", null, {});
   },
 };
