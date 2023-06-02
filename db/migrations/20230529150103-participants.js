@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      type: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -22,7 +22,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      type: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -35,7 +35,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      type: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -86,14 +86,26 @@ module.exports = {
       },
       nationality_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "nationality",
+          key: "id",
+        },
         allowNull: false,
       },
       race_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "race",
+          key: "id",
+        },
         allowNull: false,
       },
       marital_status_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "marital_status",
+          key: "id",
+        },
         allowNull: false,
       },
       created_at: {
@@ -107,7 +119,7 @@ module.exports = {
     });
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable("nationalities");
     await queryInterface.dropTable("races");
     await queryInterface.dropTable("marital_statuses");

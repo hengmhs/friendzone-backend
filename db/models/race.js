@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Race extends Model {
     static associate(models) {
       this.hasMany(models.participant, {
-        foreignKey: "race_id",
+        foreignKey: "raceId",
       });
     }
   }
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      type: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,

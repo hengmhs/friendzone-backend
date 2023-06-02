@@ -2,52 +2,54 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface) {
     await queryInterface.bulkInsert("nationalities", [
       {
-        type: "Singapore Citizen",
+        name: "Singapore Citizen",
       },
       {
-        type: "Singapore PR",
+        name: "Singapore PR",
       },
       {
-        type: "Others",
+        name: "Others",
       },
     ]);
     await queryInterface.bulkInsert("races", [
       {
-        type: "Chinese",
+        name: "Chinese",
       },
       {
-        type: "Malay",
+        name: "Malay",
       },
       {
-        type: "Eurasian",
+        name: "Eurasian",
       },
       {
-        type: "Indian",
+        name: "Indian",
       },
       {
-        type: "Others",
+        name: "Others",
       },
     ]);
     await queryInterface.bulkInsert("marital_statuses", [
       {
-        type: "Single",
+        name: "Single",
       },
       {
-        type: "Married",
+        name: "Married",
       },
       {
-        type: "Others",
+        name: "Married with Kids",
+      },
+      {
+        name: "Others",
       },
     ]);
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.bulkDelete("nationalities", null, {});
     await queryInterface.bulkDelete("races", null, {});
     await queryInterface.bulkDelete("marital_statuses", null, {});
-    await queryInterface.bulkDelete("neighbourhoods", null, {});
   },
 };

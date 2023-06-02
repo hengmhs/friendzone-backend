@@ -2,14 +2,14 @@
 
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class MaritalStatus extends Model {
+  class Marital_Status extends Model {
     static associate(models) {
       this.hasMany(models.participant, {
-        foreignKey: "marital_status_id",
+        foreignKey: "maritalStatusId",
       });
     }
   }
-  MaritalStatus.init(
+  Marital_Status.init(
     {
       id: {
         allowNull: false,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      type: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -30,5 +30,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   );
-  return MaritalStatus;
+  return Marital_Status;
 };

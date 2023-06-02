@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.marital_status);
       this.belongsTo(models.race);
       this.belongsTo(models.neighbourhood);
+      this.belongsToMany(models.event, {
+        through: "events_groups_participants",
+      });
     }
   }
   Participant.init(
@@ -22,9 +25,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      postal_code: {
+      postalCode: {
         type: DataTypes.STRING,
         allowNull: false,
+        references: {
+          model: "neighbourhood",
+          key: "id",
+        },
       },
       year: {
         type: DataTypes.INTEGER,
@@ -35,31 +42,43 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
-      is_first_time: {
+      isFirstTime: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      is_male: {
+      isMale: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      nationality_id: {
+      nationalityId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "nationality",
+          key: "id",
+        },
       },
-      race_id: {
+      raceId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "race",
+          key: "id",
+        },
       },
-      marital_status_id: {
+      maritalStatusId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "marital_status",
+          key: "id",
+        },
       },
-      created_at: {
+      createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
       },

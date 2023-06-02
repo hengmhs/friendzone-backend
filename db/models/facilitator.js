@@ -1,15 +1,13 @@
 "use strict";
-
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
-  class Nationality extends Model {
+  class Facilitator extends Model {
     static associate(models) {
-      this.hasMany(models.participant, {
-        foreignKey: "nationality_id",
-      });
+      this.hasMany(models.group);
     }
   }
-  Nationality.init(
+  Facilitator.init(
     {
       id: {
         allowNull: false,
@@ -22,13 +20,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
     {
       sequelize,
-      modelName: "nationality",
+      modelName: "facilitator",
       underscored: true,
-      timestamps: false,
     }
   );
-  return Nationality;
+  return Facilitator;
 };
