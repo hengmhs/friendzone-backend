@@ -87,7 +87,7 @@ module.exports = {
       nationality_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "nationality",
+          model: "nationalities",
           key: "id",
         },
         allowNull: false,
@@ -95,7 +95,7 @@ module.exports = {
       race_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "race",
+          model: "races",
           key: "id",
         },
         allowNull: false,
@@ -103,7 +103,7 @@ module.exports = {
       marital_status_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "marital_status",
+          model: "marital_statuses",
           key: "id",
         },
         allowNull: false,
@@ -120,9 +120,9 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("nationalities");
-    await queryInterface.dropTable("races");
-    await queryInterface.dropTable("marital_statuses");
     await queryInterface.dropTable("participants");
+    await queryInterface.dropTable("marital_statuses");
+    await queryInterface.dropTable("races");
+    await queryInterface.dropTable("nationalities");
   },
 };

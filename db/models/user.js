@@ -2,14 +2,8 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class Group extends Model {
-    static associate(models) {
-      this.hasMany(models.eventGroupParticipant);
-      this.belongsTo(models.event);
-      this.belongsTo(models.facilitator);
-    }
-  }
-  Group.init(
+  class User extends Model {}
+  User.init(
     {
       id: {
         allowNull: false,
@@ -17,25 +11,19 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      eventId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "event",
-          key: "id",
-        },
-      },
-      facilitatorId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "facilitator",
-          key: "id",
-        },
-      },
-      name: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      isStaff: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -48,9 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "group",
+      modelName: "user",
       underscored: true,
     }
   );
-  return Group;
+  return User;
 };

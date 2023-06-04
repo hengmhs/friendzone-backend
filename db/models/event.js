@@ -39,14 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      eventType: {
-        type: DataTypes.STRING,
+      eventTypeId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: "friendzone",
       },
       createdAt: {
         type: DataTypes.DATE,

@@ -43,17 +43,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       statusId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         references: {
           model: "status",
           key: "id",
         },
-        defaultValue: 0,
       },
       isAttended: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
       },
       remarks: {
         type: DataTypes.STRING,
@@ -72,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "event_group_participant",
+      modelName: "eventGroupParticipant",
       underscored: true,
     }
   );
