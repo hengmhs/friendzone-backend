@@ -49,11 +49,11 @@ module.exports = {
           model: "event_types",
           key: "id",
         },
-        allowNull: false,
+        defaultValue: 1,
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
+        defaultValue: "friendzone",
       },
       created_at: {
         type: Sequelize.DATE,
@@ -170,11 +170,10 @@ module.exports = {
           model: "statuses",
           key: "id",
         },
-        allowNull: false,
       },
       is_attended: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        defaultValue: false,
       },
       remarks: {
         type: Sequelize.STRING,
