@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.nationality);
       this.belongsTo(models.marital_status);
       this.belongsTo(models.race);
-      this.belongsTo(models.neighbourhood);
+      this.belongsTo(models.neighbourhood, { foreignKey: "postalCode" });
       this.belongsToMany(models.event, {
         through: "events_groups_participants",
       });

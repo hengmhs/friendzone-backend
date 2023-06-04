@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "event_group_participant",
+      modelName: "eventGroupParticipant",
       underscored: true,
     }
   );

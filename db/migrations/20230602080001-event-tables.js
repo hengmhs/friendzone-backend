@@ -3,6 +3,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("event_types", {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+      },
+    });
     await queryInterface.createTable("events", {
       id: {
         allowNull: false,
@@ -30,60 +43,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      event_type: {
-        type: Sequelize.STRING,
+      event_type_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "event_types",
+          key: "id",
+        },
         allowNull: false,
       },
       password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
-    await queryInterface.createTable("event_types", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    });
-    await queryInterface.createTable("groups", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      event_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "event",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      facilitator_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "facilitator",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -117,6 +85,42 @@ module.exports = {
         allowNull: false,
       },
     });
+    await queryInterface.createTable("groups", {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      event_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "events",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      facilitator_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "facilitators",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+    });
     await queryInterface.createTable("statuses", {
       id: {
         allowNull: false,
@@ -140,7 +144,7 @@ module.exports = {
       event_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "event",
+          model: "events",
           key: "id",
         },
         allowNull: false,
@@ -148,7 +152,7 @@ module.exports = {
       participant_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "participant",
+          model: "participants",
           key: "id",
         },
         allowNull: false,
@@ -156,14 +160,14 @@ module.exports = {
       group_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "group",
+          model: "groups",
           key: "id",
         },
       },
       status_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "status",
+          model: "statuses",
           key: "id",
         },
         allowNull: false,
@@ -190,11 +194,11 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("events");
-    await queryInterface.dropTable("event_types");
+    await queryInterface.dropTable("events_groups_participants");
+    await queryInterface.dropTable("statuses");
     await queryInterface.dropTable("groups");
     await queryInterface.dropTable("facilitators");
-    await queryInterface.dropTable("statuses");
-    await queryInterface.dropTable("events_groups_participants");
+    await queryInterface.dropTable("events");
+    await queryInterface.dropTable("event_types");
   },
 };

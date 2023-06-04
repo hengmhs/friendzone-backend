@@ -11,7 +11,7 @@ class EventsController extends BaseController {
     return res.json("response for ", eventId);
   };
 
-  addEvent = async (req, res) => {
+  insertOne = async (req, res) => {
     const { eventDetails } = req.body;
     // push these details to events table
     return res.json({ content: eventDetails });
