@@ -3,19 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("event_types", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    });
     await queryInterface.createTable("events", {
       id: {
         allowNull: false,
@@ -64,27 +51,6 @@ module.exports = {
         allowNull: false,
       },
     });
-    await queryInterface.createTable("facilitators", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
     await queryInterface.createTable("groups", {
       id: {
         allowNull: false,
@@ -119,19 +85,6 @@ module.exports = {
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
-      },
-    });
-    await queryInterface.createTable("statuses", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
       },
     });
     await queryInterface.createTable("events_groups_participants", {
@@ -194,10 +147,7 @@ module.exports = {
 
   async down(queryInterface) {
     await queryInterface.dropTable("events_groups_participants");
-    await queryInterface.dropTable("statuses");
     await queryInterface.dropTable("groups");
-    await queryInterface.dropTable("facilitators");
     await queryInterface.dropTable("events");
-    await queryInterface.dropTable("event_types");
   },
 };
