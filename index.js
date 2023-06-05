@@ -31,9 +31,9 @@ const checkJwt = auth({
 
 //---------------- Initialisation ----------------//
 
-const eventsController = new EventsController(event);
+const eventsController = new EventsController(event, db);
 const eventsRouter = new EventsRouter(eventsController, checkJwt).routes();
-const participantsController = new ParticipantsController(participant);
+const participantsController = new ParticipantsController(participant, db);
 const participantsRouter = new ParticipantsRouter(
   participantsController,
   checkJwt

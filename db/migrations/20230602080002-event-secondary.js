@@ -32,14 +32,15 @@ module.exports = {
       },
       event_type_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: "event_types",
           key: "id",
         },
-        defaultValue: 1,
       },
       password: {
         type: Sequelize.STRING,
+        allowNull: false,
         defaultValue: "friendzone",
       },
       created_at: {
@@ -123,9 +124,12 @@ module.exports = {
           model: "statuses",
           key: "id",
         },
+        allowNull: false,
+        defaultValue: 1,
       },
       is_attended: {
         type: Sequelize.BOOLEAN,
+        allowNull: false,
         defaultValue: false,
       },
       remarks: {

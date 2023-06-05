@@ -47,9 +47,13 @@ module.exports = (sequelize, DataTypes) => {
           model: "status",
           key: "id",
         },
+        allowNull: false,
+        defaultValue: 1,
       },
       isAttended: {
         type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       remarks: {
         type: DataTypes.STRING,

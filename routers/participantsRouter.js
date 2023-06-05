@@ -7,6 +7,7 @@ class ParticipantsRouter {
   }
   routes() {
     router.get("/", this.controller.getAll.bind(this.controller));
+    router.post("/", this.controller.insertBulk.bind(this.controller));
     return router;
   }
 }

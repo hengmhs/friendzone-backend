@@ -7,9 +7,14 @@ class FacilitatorsController extends BaseController {
 
   insertOne = async (req, res) => {
     const { name } = req.body;
-
-    // push these details to events table
-    return res.json({ content: name });
+    try {
+      const insertedFacil = await this.model.create({
+        name,
+      });
+      return res.json({ success: true, content: insertedFacil });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
   };
 }
 

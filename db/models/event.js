@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
+        allowNull: false,
         defaultValue: "friendzone",
       },
       createdAt: {

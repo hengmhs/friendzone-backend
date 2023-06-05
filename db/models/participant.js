@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Participant extends Model {
     static associate(models) {
       this.belongsTo(models.nationality);
-      this.belongsTo(models.marital_status);
+      this.belongsTo(models.maritalStatus);
       this.belongsTo(models.race);
       this.belongsTo(models.neighbourhood, { foreignKey: "postalCode" });
       this.belongsToMany(models.event, {
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "marital_status",
+          model: "maritalStatus",
           key: "id",
         },
       },

@@ -10,6 +10,7 @@ module.exports = {
         end_time: "21:00",
         date: "2023-10-12",
         venue: "Serangoon CC, Level 1",
+        password: "friendzone",
         event_type_id: 1,
         created_at: new Date(),
         updated_at: new Date(),

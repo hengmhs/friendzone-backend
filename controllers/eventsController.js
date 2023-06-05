@@ -1,8 +1,9 @@
 const BaseController = require("./baseController");
 
 class EventsController extends BaseController {
-  constructor(model) {
+  constructor(model, { participant }) {
     super(model);
+    this.participant = participant;
   }
 
   getEventParticipants = async (req, res) => {
@@ -12,9 +13,22 @@ class EventsController extends BaseController {
   };
 
   insertOne = async (req, res) => {
-    const { eventDetails } = req.body;
-    // push these details to events table
-    return res.json({ content: eventDetails });
+    const { name, startTime, endTime, date, venue, eventTypeId, password } =
+      req.body;
+    try {
+      const insertedEvent = await this.model.create({
+        name,
+        startTime,
+        endTime,
+        date,
+        venue,
+        eventTypeId,
+        password,
+      });
+      return res.json({ success: true, content: insertedEvent });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
   };
 }
 
