@@ -30,13 +30,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      event_type_id: {
-        type: Sequelize.INTEGER,
+      event_type: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "event_types",
-          key: "id",
-        },
       },
       password: {
         type: Sequelize.STRING,

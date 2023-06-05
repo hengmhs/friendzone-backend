@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
         through: "events_groups_participants",
       });
       this.hasMany(models.group);
-      this.belongsTo(models.event_type);
     }
   }
   Event.init(
@@ -39,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      eventTypeId: {
-        type: DataTypes.INTEGER,
+      eventType: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       password: {

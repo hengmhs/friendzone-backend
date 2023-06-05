@@ -4,9 +4,6 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Participant extends Model {
     static associate(models) {
-      this.belongsTo(models.nationality);
-      this.belongsTo(models.maritalStatus);
-      this.belongsTo(models.race);
       this.belongsTo(models.neighbourhood, { foreignKey: "postalCode" });
       this.belongsToMany(models.event, {
         through: "events_groups_participants",
@@ -50,29 +47,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
-      nationalityId: {
-        type: DataTypes.INTEGER,
+      nationality: {
+        type: DataTypes.STRING,
         allowNull: false,
-        references: {
-          model: "nationality",
-          key: "id",
-        },
       },
-      raceId: {
-        type: DataTypes.INTEGER,
+      race: {
+        type: DataTypes.STRING,
         allowNull: false,
-        references: {
-          model: "race",
-          key: "id",
-        },
       },
-      maritalStatusId: {
-        type: DataTypes.INTEGER,
+      maritalStatus: {
+        type: DataTypes.STRING,
         allowNull: false,
-        references: {
-          model: "maritalStatus",
-          key: "id",
-        },
       },
       createdAt: {
         type: DataTypes.DATE,

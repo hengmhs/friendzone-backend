@@ -9,6 +9,66 @@ class ParticipantsController extends BaseController {
   }
 
   insertBulk = async (req, res) => {
+    const participantJSON = req.body;
+
+    try {
+      participantJSON.map(async (participant) => {
+        const {
+          name,
+          postalCode,
+          year,
+          mobile,
+          isMale,
+          nationality,
+          race,
+          maritalStatus,
+        } = participant;
+
+        const existingParticipant = await this.model.findOne({
+          where: { mobile: mobile },
+        });
+
+        if (!existingParticipant) {
+          try {
+            await this.model.create({
+              name,
+              postalCode,
+              year,
+              mobile,
+              nationality,
+              race,
+              maritalStatus,
+              isMale,
+              isFirstTime: true,
+            });
+            return "Success";
+          } catch (err) {
+            return "Fail";
+          }
+        } else {
+          await existingParticipant.update({ isFirstTime: false });
+          return "Success";
+        }
+      });
+      return res.json({
+        success: true,
+        msg: "Successfully added all participants",
+      });
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "No participant JSON found" });
+    }
+  };
+
+  // maybe we can "lazy load" by only loading first few (or use pagination)
+  // and then use search queries to pull data on filter.
+}
+
+module.exports = ParticipantsController;
+
+/*
+insertBulk = async (req, res) => {
     // Get IDs of elements
     // Nationality
     const sgp = await this.nationality.findOne({
@@ -139,9 +199,4 @@ class ParticipantsController extends BaseController {
         .json({ success: false, msg: "No participant JSON found" });
     }
   };
-
-  // maybe we can "lazy load" by only loading first few (or use pagination)
-  // and then use search queries to pull data on filter.
-}
-
-module.exports = ParticipantsController;
+  */

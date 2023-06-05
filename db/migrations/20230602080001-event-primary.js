@@ -3,19 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("event_types", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    });
     await queryInterface.createTable("facilitators", {
       id: {
         allowNull: false,
@@ -54,9 +41,6 @@ module.exports = {
 
   async down(queryInterface) {
     await queryInterface.dropTable("statuses");
-
     await queryInterface.dropTable("facilitators");
-
-    await queryInterface.dropTable("event_types");
   },
 };

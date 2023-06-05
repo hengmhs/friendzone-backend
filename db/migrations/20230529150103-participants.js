@@ -2,45 +2,6 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("nationalities", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    });
-    await queryInterface.createTable("races", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    });
-    await queryInterface.createTable("marital_statuses", {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    });
     await queryInterface.createTable("neighbourhoods", {
       id: {
         allowNull: false,
@@ -64,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
       postal_code: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       year: {
@@ -84,28 +45,16 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      nationality_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "nationalities",
-          key: "id",
-        },
+      nationality: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      race_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "races",
-          key: "id",
-        },
+      race: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      marital_status_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "marital_statuses",
-          key: "id",
-        },
+      marital_status: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
@@ -121,8 +70,6 @@ module.exports = {
 
   async down(queryInterface) {
     await queryInterface.dropTable("participants");
-    await queryInterface.dropTable("marital_statuses");
-    await queryInterface.dropTable("races");
-    await queryInterface.dropTable("nationalities");
+    await queryInterface.dropTable("neighbourhoods");
   },
 };
