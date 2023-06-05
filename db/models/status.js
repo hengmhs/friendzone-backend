@@ -4,7 +4,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Status extends Model {
     static associate(models) {
-      this.hasMany(models.eventGroupParticipant);
+      this.hasMany(models.eventsGroupsParticipants);
     }
   }
   Status.init(

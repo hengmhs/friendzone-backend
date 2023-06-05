@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.neighbourhood, { foreignKey: "postalCode" });
       this.belongsToMany(models.event, {
-        through: "events_groups_participants",
+        through: "eventsGroupsParticipants",
       });
     }
   }

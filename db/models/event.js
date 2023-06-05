@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
       this.belongsToMany(models.participant, {
-        through: "events_groups_participants",
+        through: "eventsGroupsParticipants",
       });
       this.hasMany(models.group);
     }
