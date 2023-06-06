@@ -38,6 +38,28 @@ class GroupsController extends BaseController {
     }
   };
 
+  editBulk = async (req, res) => {
+    const { eventId } = req.params;
+    const { groupArray } = req.body;
+    try {
+      groupArray.map(async (group) => {
+        const { name, facilitatorId } = group;
+        const selectedGroup = await this.model.findOne({
+          where: {
+            eventId: eventId,
+            name: name,
+          },
+        });
+        await selectedGroup.update({
+          facilitatorId: facilitatorId,
+        });
+      });
+      return res.json({ success: true });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
+  };
+
   /*
   insertOne = async (req, res) => {
     const { eventId } = req.params;

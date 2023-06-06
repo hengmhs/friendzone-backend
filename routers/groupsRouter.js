@@ -9,6 +9,7 @@ class GroupsRouter {
     router.get("/:eventId/", this.controller.getAllEvent.bind(this.controller));
     router.get("/", this.controller.getAll.bind(this.controller));
     router.post("/:eventId", this.controller.insertBulk.bind(this.controller));
+    router.put("/:eventId", this.controller.editBulk.bind(this.controller));
     return router;
   }
 }
