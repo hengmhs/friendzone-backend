@@ -1,15 +1,22 @@
 const BaseController = require("./baseController");
 
 class EventsController extends BaseController {
-  constructor(model, { participant }) {
+  constructor(model, { participant, eventsGroupsParticipants }) {
     super(model);
     this.participant = participant;
+    this.eventsGroupsParticipants = eventsGroupsParticipants;
   }
 
   getEventParticipants = async (req, res) => {
     const { eventId } = req.params;
     // get all participants from events-participants-groups model where event_id = eventId
-    return res.json("response for ", eventId);
+    const eventParticipants = await this.eventsGroupsParticipants.findAll({
+      where: {
+        eventId: eventId,
+      },
+      include: this.participant,
+    });
+    return res.json(eventParticipants);
   };
 
   getOne = async (req, res) => {
