@@ -3,18 +3,17 @@ const BaseController = require("./baseController");
 class ParticipantsController extends BaseController {
   constructor(
     model,
-    { nationality, race, maritalStatus, eventGroupParticipant }
+    { nationality, race, maritalStatus, eventsGroupsParticipants }
   ) {
     super(model);
     this.nationality = nationality;
     this.race = race;
     this.maritalStatus = maritalStatus;
-    this.eventGroupParticipant = eventGroupParticipant;
+    this.eventsGroupsParticipants = eventsGroupsParticipants;
   }
 
   insertBulk = async (req, res) => {
-    // TODO: add eventId
-    const { participantJSON } = req.body;
+    const { participantJSON, eventId } = req.body;
 
     try {
       participantJSON.map(async (participant) => {
@@ -46,17 +45,28 @@ class ParticipantsController extends BaseController {
               isMale,
               isFirstTime: true,
             });
-            console.log(newParticipant);
-            console.log("New Participant Id: ", newParticipant.id);
+
+            await this.eventsGroupsParticipants.create({
+              eventId,
+              participantId: newParticipant.id,
+            });
+
             return "Success";
           } catch (err) {
             return "Fail";
           }
         } else {
           await existingParticipant.update({ isFirstTime: false });
+
+          await this.eventsGroupsParticipants.create({
+            eventId,
+            participantId: existingParticipant.id,
+          });
+
           return "Success";
         }
       });
+
       return res.json({
         success: true,
         msg: "Successfully added all participants",
