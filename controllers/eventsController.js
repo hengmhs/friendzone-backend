@@ -12,6 +12,18 @@ class EventsController extends BaseController {
     return res.json("response for ", eventId);
   };
 
+  getOne = async (req, res) => {
+    const { eventId } = req.params;
+    try {
+      const event = await this.model.findOne({
+        where: { id: eventId },
+      });
+      return res.json({ success: true, event });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
+  };
+
   insertOne = async (req, res) => {
     const { name, startTime, endTime, date, venue, eventType, password } =
       req.body;
