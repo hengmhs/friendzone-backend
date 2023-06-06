@@ -10,17 +10,19 @@ require("dotenv").config();
 const EventsRouter = require("./routers/eventsRouter");
 const ParticipantsRouter = require("./routers/participantsRouter");
 const FacilitatorsRouter = require("./routers/facilitatorsRouter");
+const GroupsRouter = require("./routers/groupsRouter");
 
 //---------------- Controllers ----------------//
 
 const EventsController = require("./controllers/eventsController");
 const ParticipantsController = require("./controllers/participantsController");
 const FacilitatorsController = require("./controllers/facilitatorsController");
+const GroupsController = require("./controllers/groupsController");
 
 //--------------------- DB ---------------------//
 
 const db = require("./db/models/index");
-const { event, participant, facilitator } = db;
+const { event, participant, facilitator, group } = db;
 
 //--------------------- Auth ---------------------//
 
@@ -43,6 +45,8 @@ const facilitatorsRouter = new FacilitatorsRouter(
   facilitatorsController,
   checkJwt
 ).routes();
+const groupsController = new GroupsController(group);
+const groupsRouter = new GroupsRouter(groupsController, checkJwt).routes();
 
 //-----------------------------------------------//
 
@@ -55,6 +59,7 @@ app.use(express.json());
 app.use("/events", eventsRouter);
 app.use("/participants", participantsRouter);
 app.use("/facilitators", facilitatorsRouter);
+app.use("/groups", groupsRouter);
 
 app.listen(PORT, () => {
   console.log(`Friendzone backend listening on port ${PORT}!`);
