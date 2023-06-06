@@ -12,7 +12,9 @@ class GroupsController extends BaseController {
         where: {
           eventId: eventId,
         },
-        order: [["name", "ASC"]],
+      });
+      eventGroups.sort((group1, group2) => {
+        return Number(group1.name) - Number(group2.name);
       });
       return res.json(eventGroups);
     } catch (err) {
