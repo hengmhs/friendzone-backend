@@ -9,7 +9,7 @@ class EventsController extends BaseController {
 
   editEventParticipant = async (req, res) => {
     const { eventId } = req.params;
-    const { participantId, statusId, isAttended } = req.body;
+    const { participantId, statusId, isAttended, groupId } = req.body;
     try {
       const eventParticipant = await this.eventsGroupsParticipants.findOne({
         where: {
@@ -20,6 +20,7 @@ class EventsController extends BaseController {
       await eventParticipant.update({
         statusId: statusId,
         isAttended: isAttended,
+        groupId: groupId,
       });
       return res.json(eventParticipant);
     } catch (err) {
