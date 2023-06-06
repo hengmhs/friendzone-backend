@@ -7,12 +7,12 @@ class GroupsController extends BaseController {
 
   getAllEvent = async (req, res) => {
     const { eventId } = req.params;
-    console.log("getAllEvent is called");
     try {
       const eventGroups = await this.model.findAll({
         where: {
           eventId: eventId,
         },
+        order: [["name", "ASC"]],
       });
       return res.json(eventGroups);
     } catch (err) {
@@ -20,6 +20,25 @@ class GroupsController extends BaseController {
     }
   };
 
+  insertBulk = async (req, res) => {
+    const { eventId } = req.params;
+    const { groupArray } = req.body;
+    try {
+      groupArray.map(async (group) => {
+        const { name, facilitatorId } = group;
+        await this.model.create({
+          name,
+          facilitatorId,
+          eventId,
+        });
+      });
+      return res.json({ success: true });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
+  };
+
+  /*
   insertOne = async (req, res) => {
     const { eventId } = req.params;
     const { name, facilitatorId } = req.body;
@@ -34,6 +53,7 @@ class GroupsController extends BaseController {
       return res.status(400).json({ success: false, msg: err });
     }
   };
+  */
 }
 
 module.exports = GroupsController;
