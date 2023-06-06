@@ -13,6 +13,10 @@ class EventsRouter {
       "/:eventId/participants",
       this.controller.getEventParticipants.bind(this.controller)
     );
+    router.put(
+      "/:eventId/participants",
+      this.controller.editEventParticipant.bind(this.controller)
+    );
     return router;
   }
 }
