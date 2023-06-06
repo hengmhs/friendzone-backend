@@ -1,15 +1,20 @@
 const BaseController = require("./baseController");
 
 class ParticipantsController extends BaseController {
-  constructor(model, { nationality, race, maritalStatus }) {
+  constructor(
+    model,
+    { nationality, race, maritalStatus, eventGroupParticipant }
+  ) {
     super(model);
     this.nationality = nationality;
     this.race = race;
     this.maritalStatus = maritalStatus;
+    this.eventGroupParticipant = eventGroupParticipant;
   }
 
   insertBulk = async (req, res) => {
-    const participantJSON = req.body;
+    // TODO: add eventId
+    const { participantJSON } = req.body;
 
     try {
       participantJSON.map(async (participant) => {
@@ -30,7 +35,7 @@ class ParticipantsController extends BaseController {
 
         if (!existingParticipant) {
           try {
-            await this.model.create({
+            const newParticipant = await this.model.create({
               name,
               postalCode,
               year,
@@ -41,6 +46,8 @@ class ParticipantsController extends BaseController {
               isMale,
               isFirstTime: true,
             });
+            console.log(newParticipant);
+            console.log("New Participant Id: ", newParticipant.id);
             return "Success";
           } catch (err) {
             return "Fail";

@@ -13,7 +13,7 @@ class EventsController extends BaseController {
   };
 
   insertOne = async (req, res) => {
-    const { name, startTime, endTime, date, venue, eventTypeId, password } =
+    const { name, startTime, endTime, date, venue, eventType, password } =
       req.body;
     try {
       const insertedEvent = await this.model.create({
@@ -22,7 +22,7 @@ class EventsController extends BaseController {
         endTime,
         date,
         venue,
-        eventTypeId,
+        eventType,
         password,
       });
       return res.json({ success: true, content: insertedEvent });
