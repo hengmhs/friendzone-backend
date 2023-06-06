@@ -6,9 +6,9 @@ class BaseController {
   async getAll(req, res) {
     try {
       const output = await this.model.findAll();
-      return res.json(output);
+      return res.json({ success: true, data: output });
     } catch (err) {
-      return res.status(400).json({ error: true, msg: err });
+      return res.status(400).json({ success: false, msg: err });
     }
   }
 }

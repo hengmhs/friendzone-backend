@@ -16,7 +16,7 @@ class GroupsController extends BaseController {
       eventGroups.sort((group1, group2) => {
         return Number(group1.name) - Number(group2.name);
       });
-      return res.json(eventGroups);
+      return res.json({ success: true, data: eventGroups });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }
@@ -26,15 +26,18 @@ class GroupsController extends BaseController {
     const { eventId } = req.params;
     const { groupArray } = req.body;
     try {
-      groupArray.map(async (group) => {
-        const { name, facilitatorId } = group;
-        await this.model.create({
-          name,
-          facilitatorId,
-          eventId,
-        });
-      });
-      return res.json({ success: true });
+      const insertedGroups = await Promise.all(
+        groupArray.map(async (group) => {
+          const { name, facilitatorId } = group;
+          const createdGroup = await this.model.create({
+            name,
+            facilitatorId,
+            eventId,
+          });
+          return createdGroup;
+        })
+      );
+      return res.json({ success: true, data: insertedGroups });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }
@@ -44,19 +47,22 @@ class GroupsController extends BaseController {
     const { eventId } = req.params;
     const { groupArray } = req.body;
     try {
-      groupArray.map(async (group) => {
-        const { name, facilitatorId } = group;
-        const selectedGroup = await this.model.findOne({
-          where: {
-            eventId: eventId,
-            name: name,
-          },
-        });
-        await selectedGroup.update({
-          facilitatorId: facilitatorId,
-        });
-      });
-      return res.json({ success: true });
+      const updatedGroups = await Promise.all(
+        groupArray.map(async (group) => {
+          const { name, facilitatorId } = group;
+          const selectedGroup = await this.model.findOne({
+            where: {
+              eventId: eventId,
+              name: name,
+            },
+          });
+          const updatedGroup = await selectedGroup.update({
+            facilitatorId: facilitatorId,
+          });
+          return updatedGroup;
+        })
+      );
+      return res.json({ success: true, data: updatedGroups });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }

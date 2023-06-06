@@ -22,7 +22,7 @@ class EventsController extends BaseController {
         isAttended: isAttended,
         groupId: groupId,
       });
-      return res.json(eventParticipant);
+      return res.json({ success: true, data: eventParticipant });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }
@@ -31,14 +31,18 @@ class EventsController extends BaseController {
   getEventParticipants = async (req, res) => {
     const { eventId } = req.params;
     // get all participants from events-participants-groups model where event_id = eventId
-    const eventParticipants = await this.eventsGroupsParticipants.findAll({
-      where: {
-        eventId: eventId,
-      },
-      order: [["statusId", "DESC"]],
-      include: this.participant,
-    });
-    return res.json(eventParticipants);
+    try {
+      const eventParticipants = await this.eventsGroupsParticipants.findAll({
+        where: {
+          eventId: eventId,
+        },
+        order: [["statusId", "DESC"]],
+        include: this.participant,
+      });
+      return res.json({ success: true, data: eventParticipants });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
   };
 
   getOne = async (req, res) => {
