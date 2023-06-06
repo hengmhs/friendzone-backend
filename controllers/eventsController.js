@@ -34,6 +34,7 @@ class EventsController extends BaseController {
       where: {
         eventId: eventId,
       },
+      order: [["statusId", "DESC"]],
       include: this.participant,
     });
     return res.json(eventParticipants);
