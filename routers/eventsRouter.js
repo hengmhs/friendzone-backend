@@ -17,6 +17,10 @@ class EventsRouter {
       "/:eventId/participants",
       this.controller.editEventParticipant.bind(this.controller)
     );
+    router.put(
+      "/:eventId/bulk/participants",
+      this.controller.bulkEditEventParticipant.bind(this.controller)
+    );
     return router;
   }
 }

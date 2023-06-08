@@ -7,6 +7,31 @@ class EventsController extends BaseController {
     this.eventsGroupsParticipants = eventsGroupsParticipants;
   }
 
+  bulkEditEventParticipant = async (req, res) => {
+    console.log("Reached!");
+    const { participantArray } = req.body;
+    try {
+      const editedParticipants = await Promise.all(
+        participantArray.map(async (person) => {
+          const { egpId, groupId } = person;
+          const selectedParticipant =
+            await this.eventsGroupsParticipants.findOne({
+              where: {
+                id: egpId,
+              },
+            });
+          await selectedParticipant.update({
+            groupId: groupId,
+          });
+          return selectedParticipant;
+        })
+      );
+      return res.json({ success: true, data: editedParticipants });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
+  };
+
   editEventParticipant = async (req, res) => {
     const { eventId } = req.params;
     const { participantId, statusId, isAttended, groupId } = req.body;
