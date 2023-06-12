@@ -68,6 +68,23 @@ class GroupsController extends BaseController {
     }
   };
 
+  deleteGroup = async (req, res) => {
+    const { eventId, groupId } = req.params;
+    try {
+      const count = await this.model.destroy({
+        where: { eventId: eventId, id: groupId },
+      });
+      return res.json({
+        success: true,
+        data: `Deleted ${count} group with id ${groupId}`,
+      });
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ success: false, msg: "Couldn't delete group." });
+    }
+  };
+
   /*
   insertOne = async (req, res) => {
     const { eventId } = req.params;
