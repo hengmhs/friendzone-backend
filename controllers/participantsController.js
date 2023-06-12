@@ -1,14 +1,8 @@
 const BaseController = require("./baseController");
 
 class ParticipantsController extends BaseController {
-  constructor(
-    model,
-    { nationality, race, maritalStatus, eventsGroupsParticipants }
-  ) {
+  constructor(model, { eventsGroupsParticipants }) {
     super(model);
-    this.nationality = nationality;
-    this.race = race;
-    this.maritalStatus = maritalStatus;
     this.eventsGroupsParticipants = eventsGroupsParticipants;
   }
 

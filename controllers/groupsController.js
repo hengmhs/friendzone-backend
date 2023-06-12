@@ -1,8 +1,9 @@
 const BaseController = require("./baseController");
 
 class GroupsController extends BaseController {
-  constructor(model) {
+  constructor(model, { eventsGroupsParticipants }) {
     super(model);
+    this.eventsGroupsParticipants = eventsGroupsParticipants;
   }
 
   getAllEvent = async (req, res) => {
@@ -71,6 +72,11 @@ class GroupsController extends BaseController {
   deleteGroup = async (req, res) => {
     const { eventId, groupId } = req.params;
     try {
+      const removeGroups = await this.eventsGroupsParticipants.update(
+        { groupId: null },
+        { where: { eventId: eventId, groupId: groupId } }
+      );
+      console.log(removeGroups);
       const count = await this.model.destroy({
         where: { eventId: eventId, id: groupId },
       });
@@ -81,7 +87,7 @@ class GroupsController extends BaseController {
     } catch (err) {
       return res
         .status(400)
-        .json({ success: false, msg: "Couldn't delete group." });
+        .json({ success: false, msg: "Couldn't delete group.", err });
     }
   };
 
