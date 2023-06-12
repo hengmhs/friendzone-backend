@@ -45,7 +45,7 @@ const facilitatorsRouter = new FacilitatorsRouter(
   facilitatorsController,
   checkJwt
 ).routes();
-const groupsController = new GroupsController(group);
+const groupsController = new GroupsController(group, db);
 const groupsRouter = new GroupsRouter(groupsController, checkJwt).routes();
 
 //-----------------------------------------------//
