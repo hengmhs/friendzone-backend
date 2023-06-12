@@ -29,6 +29,7 @@ const { event, participant, facilitator, group } = db;
 const checkJwt = auth({
   audience: process.env.AUDIENCE,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
+  tokenSigningAlg: "RS256",
 });
 
 //---------------- Initialisation ----------------//
