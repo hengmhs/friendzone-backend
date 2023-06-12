@@ -1,10 +1,15 @@
 const BaseController = require("./baseController");
 
 class EventsController extends BaseController {
-  constructor(model, { participant, eventsGroupsParticipants }) {
+  constructor(
+    model,
+    { participant, group, eventsGroupsParticipants, neighbourhood }
+  ) {
     super(model);
     this.participant = participant;
     this.eventsGroupsParticipants = eventsGroupsParticipants;
+    this.group = group;
+    this.neighbourhood = neighbourhood;
   }
 
   bulkEditEventParticipant = async (req, res) => {
@@ -64,7 +69,28 @@ class EventsController extends BaseController {
         order: [["statusId", "DESC"]],
         include: this.participant,
       });
-      return res.json({ success: true, data: eventParticipants });
+
+      const fullEventParticipants = await Promise.all(
+        eventParticipants.map(async (participant) => {
+          const neighbourhood = await this.neighbourhood.findOne({
+            where: {
+              id: participant.dataValues.participant.dataValues.postalCode,
+            },
+          });
+
+          const data = {
+            ...participant.dataValues,
+            neighbourhood: neighbourhood
+              ? neighbourhood.dataValues.location
+              : "Not Found",
+          };
+          console.log(data);
+          return data;
+        })
+      );
+
+      console.log("full list", fullEventParticipants);
+      return res.json({ success: true, data: fullEventParticipants });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }

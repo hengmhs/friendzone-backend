@@ -1,10 +1,20 @@
 const BaseController = require("./baseController");
 
 class ParticipantsController extends BaseController {
-  constructor(model, { eventsGroupsParticipants }) {
+  constructor(model, { eventsGroupsParticipants, neighbourhood }) {
     super(model);
     this.eventsGroupsParticipants = eventsGroupsParticipants;
+    this.neighbourhood = neighbourhood;
   }
+
+  getAllParticipants = async (req, res) => {
+    try {
+      const output = await this.model.findAll({ include: this.neighbourhood });
+      return res.json({ success: true, data: output });
+    } catch (err) {
+      return res.status(400).json({ success: false, msg: err });
+    }
+  };
 
   insertBulk = async (req, res) => {
     const { participantJSON, eventId } = req.body;
