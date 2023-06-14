@@ -35,6 +35,7 @@ class ParticipantsController extends BaseController {
         const existingParticipant = await this.model.findOne({
           where: { mobile: mobile },
         });
+        console.log("Does this part exist?: ", existingParticipant);
 
         if (!existingParticipant) {
           try {
@@ -60,14 +61,25 @@ class ParticipantsController extends BaseController {
             return "Fail";
           }
         } else {
-          await existingParticipant.update({ isFirstTime: false });
+          const participantAlreadyUploaded =
+            await this.eventsGroupsParticipants.findOne({
+              where: {
+                eventId: eventId,
+                participantId: existingParticipant.dataValues.id,
+              },
+            });
+          if (!participantAlreadyUploaded) {
+            await existingParticipant.update({ isFirstTime: false });
 
-          await this.eventsGroupsParticipants.create({
-            eventId,
-            participantId: existingParticipant.id,
-          });
+            await this.eventsGroupsParticipants.create({
+              eventId,
+              participantId: existingParticipant.id,
+            });
 
-          return "Success";
+            return "Success";
+          } else {
+            return "Already Added";
+          }
         }
       });
 

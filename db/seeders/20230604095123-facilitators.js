@@ -24,6 +24,16 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        name: "Jeremy Lee",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        name: "Abigail Tan",
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ]);
   },
 
