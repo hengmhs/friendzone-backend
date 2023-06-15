@@ -11,6 +11,26 @@ For Project 3, we built software for [Friendzone](https://friendzone.sg/) to aut
 
 ## Database Setup
 
+1. Create the database:
+```
+npx sequelize db:create
+```
+
+2. Migrate the database tables:
+```
+npx sequelize db:migrate
+```
+
+3. Seed the database:
+```
+npx sequelize db:seed:all
+```
+
+If you want to delete the database:
+```
+npx sequelize db:drop
+```
+
 ## .env 
 
 You also need to provide a .env file with the following configurations:
